@@ -131,15 +131,28 @@ $impacts = [
 
 //ESCRIBE AQUÍ TU PROGRAMA PRINCIPAL
 
-show($pomodoroHaters);
+show($pomodoroHaters); echo"<br>";
+
+show(impactosUrbanos($pomodoroHaters, $impacts));
+
+function impactosUrbanos (array $namearray, array $impactos){
+    foreach($impactos as $xy){
+        if ($namearray[$xy[0]][$xy[1]] == "A"){
+            $namearray[$xy[0]][$xy[1]] = "C";}
+            else{
+            $namearray[$xy[0]][$xy[1]] = $namearray[$xy[0]][$xy[1]];
+            } 
+    }
+    return $namearray;
+}
 
 
-function show($namearray){
-foreach($namearray as $lineas){
-    foreach($lineas as $bloques){
+function show(array $namearray){
+    foreach($namearray as $lineas){
+     foreach($lineas as $bloques){
         echo "$bloques";
     }echo "<br>";
-}
+    }
 }
 
 
