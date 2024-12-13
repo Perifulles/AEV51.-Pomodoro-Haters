@@ -146,6 +146,31 @@ show($todoslosimpactos);
 $costes = costes($todoslosimpactos);
 echo"<br>Teniendo en cuenta que cada km2 de zona no urbana cuesta 50.000€ de limpiar, y cada km2 de zona urbana cuesta 200.000€ de limpiar los costes totales ascienden a: $costes" ."€";
 
+$CalculoMar = CalculoMar($todoslosimpactos);
+echo 
+"<br><br>En total hay " . $CalculoMar["total"] . "Km2 de mar<br>
+El total de km2 de mar que SI que se ha visto afectado han sido:" . $CalculoMar["marsi"] .
+"<br>El total de km2 de mar que NO que se ha visto afectado han sido:" . $CalculoMar["marno"];
+
+function CalculoMar(array $namearray){
+    $marsi = 0;
+    $marno = 0;
+    foreach($namearray as $filas){
+        foreach($filas as $km2){
+            if($km2 == "~"){
+                $marno ++;
+            }
+            elseif($km2 == "S"){
+                $marsi ++;
+            }
+    }}
+    $totalmar = $marno + $marsi;
+    return[
+        "marno" => $marno,
+        "marsi" => $marsi, 
+        "total" => $totalmar];
+}
+
 function costes($namearray){
     $costes = 0;
     foreach($namearray as $filas){
