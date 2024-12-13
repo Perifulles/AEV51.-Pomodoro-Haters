@@ -133,6 +133,8 @@ $impacts = [
 
 show($pomodoroHaters);
 
+echo "<br>";
+
 $impactosUrbanos=impactosUrbanos($pomodoroHaters, $impacts);
 show($impactosUrbanos);
 
@@ -154,6 +156,18 @@ El total de km2 de mar que SI que se ha visto afectado han sido:" . $CalculoMar[
 "<br> Hemos calculado que la media de pescado, la cual nos da " . $CalculoMar["mediapescado"] . " toneladas de pescado por km2
 por lo que se han visto afectadas " . $CalculoMar["pescadoafectado"] . " toneladas de pescado"
 ;
+
+$recaudacion = recaudacion($CalculoMar["pescadoafectado"]);
+echo "<p>Dado que cada kg de pescado empleado en la elaboración del bakalao con tomate se puede vender a 5€ y contamos
+con " . $CalculoMar["pescadoafectado"] . "toneladas. La previsión de la recaudación asciende a $recaudacion" . "€</p>";
+
+
+function recaudacion($toneladas){
+    $recaudacion = $toneladas * 5000;
+    return($recaudacion);
+}
+
+
 
 function CalculoMar(array $namearray){
     $marsi = 0;
