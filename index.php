@@ -150,7 +150,10 @@ $CalculoMar = CalculoMar($todoslosimpactos);
 echo 
 "<br><br>En total hay " . $CalculoMar["total"] . "Km2 de mar<br>
 El total de km2 de mar que SI que se ha visto afectado han sido:" . $CalculoMar["marsi"] .
-"<br>El total de km2 de mar que NO que se ha visto afectado han sido:" . $CalculoMar["marno"];
+"<br>El total de km2 de mar que NO que se ha visto afectado han sido:" . $CalculoMar["marno"] .
+"<br> Hemos calculado que la media de pescado, la cual nos da " . $CalculoMar["mediapescado"] . " toneladas de pescado por km2
+por lo que se han visto afectadas " . $CalculoMar["pescadoafectado"] . " toneladas de pescado"
+;
 
 function CalculoMar(array $namearray){
     $marsi = 0;
@@ -165,10 +168,18 @@ function CalculoMar(array $namearray){
             }
     }}
     $totalmar = $marno + $marsi;
+
+    $totalpescado = 2000;
+    $mediapescadoporKm2 = $totalpescado / $totalmar;
+    $pescadoAfectdo = $mediapescadoporKm2 * $marsi;
+
     return[
         "marno" => $marno,
         "marsi" => $marsi, 
-        "total" => $totalmar];
+        "total" => $totalmar,
+        "mediapescado" => $mediapescadoporKm2,
+        "pescadoafectado" => $pescadoAfectdo
+    ];
 }
 
 function costes($namearray){
