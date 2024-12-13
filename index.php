@@ -138,7 +138,41 @@ show($impactosUrbanos);
 
 $colirio=colirio($impactosUrbanos);
 
-echo "Han habido un total de $colirio[0] afectados y se necesitan $colirio[1] litros de colirio.";
+echo "<br>Han habido un total de $colirio[0] afectados y se necesitan $colirio[1] litros de colirio.<br><br>";
+
+$todoslosimpactos = todoslosimpactos ($pomodoroHaters, $impacts);
+show($todoslosimpactos);
+
+$costes = costes($todoslosimpactos);
+echo"<br>Teniendo en cuenta que cada km2 de zona no urbana cuesta 50.000€ de limpiar, y cada km2 de zona urbana cuesta 200.000€ de limpiar los costes totales ascienden a: $costes" ."€";
+
+function costes($namearray){
+    $costes = 0;
+    foreach($namearray as $filas){
+        foreach($filas as $km2){
+            if($km2 == "C"){
+                $costes += 200000;
+            }
+            elseif($km2 == "X"){
+                $costes += 50000;
+            }
+    }}
+    return($costes);
+}
+
+function todoslosimpactos (array $namearray, array $impactos){
+    foreach($impactos as $xy){
+        if ($namearray[$xy[0]][$xy[1]] == "A"){
+            $namearray[$xy[0]][$xy[1]] = "C";}
+
+            elseif($namearray[$xy[0]][$xy[1]] == "~"){
+                $namearray[$xy[0]][$xy[1]] = "S";}
+
+                elseif($namearray[$xy[0]][$xy[1]] == "0"){
+                    $namearray[$xy[0]][$xy[1]] = "X";}
+    }
+    return $namearray;
+}
 
 function impactosUrbanos (array $namearray, array $impactos){
     foreach($impactos as $xy){
