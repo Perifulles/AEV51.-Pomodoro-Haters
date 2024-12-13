@@ -131,9 +131,14 @@ $impacts = [
 
 //ESCRIBE AQUÍ TU PROGRAMA PRINCIPAL
 
-show($pomodoroHaters); echo"<br>";
+show($pomodoroHaters);
 
-show(impactosUrbanos($pomodoroHaters, $impacts));
+$impactosUrbanos=impactosUrbanos($pomodoroHaters, $impacts);
+show($impactosUrbanos);
+
+$colirio=colirio($impactosUrbanos);
+
+echo "Han habido un total de $colirio[0] afectados y se necesitan $colirio[1] litros de colirio.";
 
 function impactosUrbanos (array $namearray, array $impactos){
     foreach($impactos as $xy){
@@ -146,7 +151,6 @@ function impactosUrbanos (array $namearray, array $impactos){
     return $namearray;
 }
 
-
 function show(array $namearray){
     foreach($namearray as $lineas){
      foreach($lineas as $bloques){
@@ -155,6 +159,18 @@ function show(array $namearray){
     }
 }
 
+function colirio(array $namearray){
+    $afectados = 0;
+    foreach($namearray as $filas){
+        foreach($filas as $km2){
+            if($km2 == "C"){
+                $afectados += 5000;
+            }
+        }
+    }
+    $litroscolirio = $afectados * 0.025;
+    return[$afectados,$litroscolirio];
+}
 
 
 //ESCRIBE AQUÍ LA DEFINICIÓN DE LAS FUNCIONES
