@@ -1,4 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form method="POST">
+  <label for="tipomapa"><h1>Elige el mapa a mostrar</h1></label>
+
+    <select name="ejercicio" id="tipomapa">
+        <option value="selec">Por favor escoja una opción</option>
+        <option value="O">1-Mapa Original</option>
+        <option value="IU">2-Mapa con los impactos Urbanos</option>
+        <option value="CC">3-Calculos Colirio</option>
+        <option value="TI">4-Todos los impactos</option>
+        <option value="CCo">5-Calculo de costes</option>
+        <option value="MA">6-Mar afectado</option>
+        <option value="R">7-Recaudación</option>
+    </select>
+
+  <input type="submit" value="Elegir">
+</form>
+
+
+</body>
+</html>
 <?php
+
+
+$ejercicio = isset($_POST['ejercicio']) ? $_POST['ejercicio'] : "select";
 
 $pomodoroHaters = [
     ['~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~', '~'],
@@ -131,43 +162,49 @@ $impacts = [
 
 //ESCRIBE AQUÍ TU PROGRAMA PRINCIPAL
 
-
-echo "<h1>Este es el mapa:</h1>";
-show($pomodoroHaters);
-
-echo "<br>";
-
 $impactosUrbanos=impactosUrbanos($pomodoroHaters, $impacts);
-echo "<h1>Y este el mapa despues de recibir los impactos</h1>";
-show($impactosUrbanos);
 
 $colirio=colirio($impactosUrbanos);
-echo "<h1>Ejercicio 3 (Afectados y Colirio)</h1>";
-echo "Han habido un total de $colirio[0] afectados y se necesitan $colirio[1] litros de colirio.<br>";
 
 $todoslosimpactos = todoslosimpactos ($pomodoroHaters, $impacts);
-echo "<h1>Mapa con todos los impactos</h1>";
-show($todoslosimpactos);
 
 $costes = costes($todoslosimpactos);
-echo "<h1>Calculo de costes</h1>";
-echo"eniendo en cuenta que cada km2 de zona no urbana cuesta 50.000€ de limpiar, y cada km2 de zona urbana cuesta 200.000€ de limpiar los costes totales ascienden a: $costes" ."€";
 
 $CalculoMar = CalculoMar($todoslosimpactos);
-echo "<h1>Mas calculos:</h1>";
-echo 
-"<br><br>En total hay " . $CalculoMar["total"] . "Km2 de mar<br>
-El total de km2 de mar que SI que se ha visto afectado han sido:" . $CalculoMar["marsi"] .
-"<br>El total de km2 de mar que NO que se ha visto afectado han sido:" . $CalculoMar["marno"] .
-"<br> Hemos calculado que la media de pescado, la cual nos da " . $CalculoMar["mediapescado"] . " toneladas de pescado por km2
-por lo que se han visto afectadas " . $CalculoMar["pescadoafectado"] . " toneladas de pescado"
-;
 
 $recaudacion = recaudacion($CalculoMar["pescadoafectado"]);
-echo "<h1>Recaudación</h1>";
-echo "<p>Dado que cada kg de pescado empleado en la elaboración del bakalao con tomate se puede vender a 5€ y contamos
-con " . $CalculoMar["pescadoafectado"] . "toneladas. La previsión de la recaudación asciende a $recaudacion" . "€</p>";
 
+switch($ejercicio){
+    case"O":
+        echo "<h1>Este es el mapa:</h1>";
+        show($pomodoroHaters);break;
+    case"IU":
+        echo "<h1>Y este el mapa despues de recibir los impactos</h1>";
+        show($impactosUrbanos);break;
+    case"CC":
+        echo "<h1>Ejercicio 3 (Afectados y Colirio)</h1>";
+        echo "Han habido un total de $colirio[0] afectados y se necesitan $colirio[1] litros de colirio.<br>";break;
+    case"TI":
+        echo "<h1>Mapa con todos los impactos</h1>";
+        show($todoslosimpactos);break;
+    case"CCo":
+        echo "<h1>Calculo de costes</h1>";
+        echo"Teniendo en cuenta que cada km2 de zona no urbana cuesta 50.000€ de limpiar, y cada km2 de zona urbana cuesta 200.000€ de limpiar los costes totales ascienden a: $costes" ."€";break;
+    case"MA":
+        echo "<h1>Mas calculos:</h1>";
+        echo 
+        "<br><br>En total hay " . $CalculoMar["total"] . "Km2 de mar<br>
+        El total de km2 de mar que SI que se ha visto afectado han sido:" . $CalculoMar["marsi"] .
+        "<br>El total de km2 de mar que NO que se ha visto afectado han sido:" . $CalculoMar["marno"] .
+        "<br> Hemos calculado que la media de pescado, la cual nos da " . $CalculoMar["mediapescado"] . " toneladas de pescado por km2
+        por lo que se han visto afectadas " . $CalculoMar["pescadoafectado"] . " toneladas de pescado"
+        ;break;
+    case"R":
+        echo "<h1>Recaudación</h1>";
+        echo "<p>Dado que cada kg de pescado empleado en la elaboración del bakalao con tomate se puede vender a 5€ y contamos
+        con " . $CalculoMar["pescadoafectado"] . "toneladas. La previsión de la recaudación asciende a $recaudacion" . "€</p>";
+        break;
+}
 
 function recaudacion($toneladas){
     $recaudacion = $toneladas * 5000;
@@ -240,7 +277,20 @@ function impactosUrbanos (array $namearray, array $impactos){
 function show(array $namearray){
     foreach($namearray as $lineas){
      foreach($lineas as $bloques){
-        echo "$bloques";
+        switch($bloques){
+            case"~":
+                echo "<span class='casillas' style='background-color:blue'>$bloques</span>";break;
+            case"0":
+                echo "<span class='casillas' style='background-color:#d86a0f'>$bloques</span>";break;
+            case"A":
+                echo "<span class='casillas' style='background-color:grey'>$bloques</span>";break;
+            case"X":
+                echo "<span class='casillas' style='background-color:black; color: white'>$bloques</span>";break;
+            case"C":
+                echo "<span class='casillas' style='background-color:red'>$bloques</span>";break;
+            case"S":
+                echo "<span class='casillas' style='background-color:#69f8fa'>$bloques</span>";break;
+            }
     }echo "<br>";
     }
 }
