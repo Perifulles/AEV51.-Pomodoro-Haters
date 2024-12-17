@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <form method="POST">
@@ -22,6 +23,7 @@
 
   <input type="submit" value="Elegir">
 </form>
+<hr class="linea">
 
 
 </body>
@@ -275,24 +277,25 @@ function impactosUrbanos (array $namearray, array $impactos){
 }
 
 function show(array $namearray){
+    echo "<div class='mapa'>";
     foreach($namearray as $lineas){
      foreach($lineas as $bloques){
         switch($bloques){
             case"~":
-                echo "<span class='casillas' style='background-color:blue'>$bloques</span>";break;
+                echo "<span class='casillas' style='background-color:#69f8fa'>$bloques</span>";break;
             case"0":
                 echo "<span class='casillas' style='background-color:#d86a0f'>$bloques</span>";break;
             case"A":
-                echo "<span class='casillas' style='background-color:grey'>$bloques</span>";break;
+                echo "<span class='casillas' style='background-color:green'>$bloques</span>";break;
             case"X":
-                echo "<span class='casillas' style='background-color:black; color: white'>$bloques</span>";break;
+                echo "<span class='casillas' style='background-color:#9a5e09;'>$bloques</span>";break;
             case"C":
                 echo "<span class='casillas' style='background-color:red'>$bloques</span>";break;
             case"S":
-                echo "<span class='casillas' style='background-color:#69f8fa'>$bloques</span>";break;
+                echo "<span class='casillas' style='background-color:blue'>$bloques</span>";break;
             }
     }echo "<br>";
-    }
+    }echo "</div>";
 }
 
 function colirio(array $namearray){

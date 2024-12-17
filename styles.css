@@ -1,0 +1,20 @@
+.mapa {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.casillas {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    margin: 2px;
+    font-weight: bold;
+    color: white;
+}
+
+.casillas:hover {
+    opacity: 0.8;
+}
