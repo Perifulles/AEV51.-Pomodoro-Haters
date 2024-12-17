@@ -1,20 +1,16 @@
 .mapa {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+    width: fit-content;
+    border: 1px solid black;
+    margin: 0 auto;
 }
 
 .casillas {
-    width: 30px;
-    height: 30px;
-    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
     text-align: center;
-    line-height: 30px;
-    margin: 2px;
-    font-weight: bold;
     color: white;
+    font-size: clamp(16px, 1vw + 1vh, 40px);
 }
 
 .casillas:hover {
-    opacity: 0.8;
+    opacity: 0.5;
 }
